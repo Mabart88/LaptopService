@@ -14,9 +14,11 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -73,6 +75,21 @@ public class AppConfig implements WebMvcConfigurer {
 	@Bean
 	public DateConverter getDateConverter() {
 		return new DateConverter();
+	}
+	
+	@Bean
+	public CharacterEncodingFilter characterEncodingFilter() {
+	    CharacterEncodingFilter filter = new CharacterEncodingFilter();
+	    filter.setEncoding("UTF-8");
+	    filter.setForceEncoding(true);
+	    return filter;
+	}
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+		registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/resources/").setCachePeriod(31556926);
+
 	}
 
 }

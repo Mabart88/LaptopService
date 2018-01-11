@@ -58,13 +58,13 @@
 						Konto</a></li>
 			</c:if>
 			<c:if test="${logged.isAdmin() }">
-				<li class="nav-item active"><a class="nav-link" href="/LaptopService/admin/users">
-						Panel administratora <span class="sr-only">(current)</span>
+				<li class="nav-item"><a class="nav-link" href="/LaptopService/admin/users">
+						Panel administratora
 				</a></li>
 			</c:if>
 			<c:if test="${logged.isRepairman() }">
-				<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/all">Panel
-						serwisanta
+				<li class="nav-item active"><a class="nav-link" href="/LaptopService/repair/all">Panel
+						serwisanta<span class="sr-only">(current)</span>
 				</a></li>
 			</c:if>
 
@@ -96,28 +96,19 @@
 
 	<main role="main"> <!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
-	
-<div class="table-responsive">
-	<table class="table table-striped">
-		<tr>
-			<td>Imię i nazwisko</td>
-			<td>Email</td>
-			<td>Uprawnienia serwisanta</td>
-			<td>Usuwanie</td>
-		</tr>
-		<c:forEach items="${users }" var="user">
-		<form:form modelAttribute="${user }">
-			<tr>
-				<td>${user.firstName } ${user.lastName }</td>
-				<td>${user.email }</td>
-				<td><a href="repairman/${user.id }"><c:if test="${user.isRepairman() }">Serwisant</c:if><c:if test="${user.isRepairman()==false }">Nie serwisant</c:if></a></td>
-				
-				<td><a href="delete/${user.id }">Usuń</a></td>
-			</tr>
-			</form:form>
-		</c:forEach>
-	</table>
-	</div>
+	<form:form method="post" modelAttribute="repair">
+	Opis naprawy: <form:textarea path="repairDesc" rows="4" cols="40" />
+		<form:errors path="repairDesc" />
+		<br>
+		<form:hidden path="description"/>
+		<form:hidden path="repairman.id"/>
+		<form:hidden path="laptop.id" />
+		<form:hidden path="warranty"/>
+
+		<input type="submit" value="Zatwierdź">
+
+		<form:errors path="*" />
+	</form:form>
 	</div>
 	</main>
 </body>

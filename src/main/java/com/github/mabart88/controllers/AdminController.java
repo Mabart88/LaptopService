@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.mabart88.entities.User;
@@ -32,21 +33,34 @@ public class AdminController {
 			admin.setFirstName("admin");
 			admin.setLastName("admin");
 			admin.setPassword("admin");
+			admin.setPhoneNumber(999999999);
 			userRepository.save(admin);
 		}
 
 		return "home";
 	}
-	
+
 	@RequestMapping("/users")
 	public String users(Model model) {
 		return "users";
 	}
-	
+
+	@RequestMapping("/repairman/{id}")
+	public String repairman(@PathVariable long id) {
+		User user = userRepository.findOne(id);
+		if (user.isRepairman()) {
+			user.setRepairman(false);
+		} else {
+			user.setRepairman(true);
+		}
+		userRepository.save(user);
+		return "redirect:/admin/users";
+	}
+
 	@ModelAttribute("users")
-	public List<User> users(){
+	public List<User> users() {
 		return userRepository.findAll();
-		
+
 	}
 
 }

@@ -46,7 +46,7 @@ public class LoginController {
 		User user = userRepository.findByEmail(email);
 		if (user != null && user.getPassword().equals(password)) {
 			sess.setAttribute("logged", user);
-			return "home";
+			return "redirect:/";
 		}
 		model.addAttribute("info", "Błędny login lub hasło");
 		return "login";
@@ -54,8 +54,7 @@ public class LoginController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession sess, Model model) {
 		sess.setAttribute("logged", null);
-		model.addAttribute("info", "Wylogowałeś się");
-		return "home";
+		return "redirect:/";
 	}
 
 }

@@ -58,13 +58,13 @@
 						Konto</a></li>
 			</c:if>
 			<c:if test="${logged.isAdmin() }">
-				<li class="nav-item active"><a class="nav-link" href="/LaptopService/admin/users">
-						Panel administratora <span class="sr-only">(current)</span>
+				<li class="nav-item"><a class="nav-link" href="/LaptopService/admin/users">
+						Panel administratora<br>
 				</a></li>
 			</c:if>
 			<c:if test="${logged.isRepairman() }">
-				<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/all">Panel
-						serwisanta
+				<li class="nav-item active"><a class="nav-link" href="/LaptopService/repair/all">Panel
+						serwisanta <span class="sr-only">(current)</span><br>
 				</a></li>
 			</c:if>
 
@@ -96,25 +96,43 @@
 
 	<main role="main"> <!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
-	
 <div class="table-responsive">
 	<table class="table table-striped">
 		<tr>
-			<td>Imię i nazwisko</td>
-			<td>Email</td>
-			<td>Uprawnienia serwisanta</td>
-			<td>Usuwanie</td>
+			<td>Id</td>
+			<td>Utworzono</td>
+			<td>Opis usterki</td>
+			<td>Opis naprawy</td>
+			<td>Naprawa</td>
+			<td>Kończenie naprawy</td>
 		</tr>
-		<c:forEach items="${users }" var="user">
-		<form:form modelAttribute="${user }">
+		<c:forEach items="${repairs }" var="repair">
 			<tr>
-				<td>${user.firstName } ${user.lastName }</td>
-				<td>${user.email }</td>
-				<td><a href="repairman/${user.id }"><c:if test="${user.isRepairman() }">Serwisant</c:if><c:if test="${user.isRepairman()==false }">Nie serwisant</c:if></a></td>
+				<td>${repair.id }</td>
+				<td>${repair.created }</td>
+				<td><c:if test="${repair.description.length()>30}">${fn:substring(repair.description,0,30) }...</c:if>
+					<c:if test="${repair.description.length()<=30}">${repair.description}</c:if></td>
 				
-				<td><a href="delete/${user.id }">Usuń</a></td>
+				<td><c:if test="${repair.repairDesc.length()>30}">${fn:substring(repair.repairDesc,0,30) }...</c:if>
+					<c:if test="${repair.repairDesc.length()<=30}">${repair.repairDesc}</c:if></td>
+				<td><c:if test="${repair.isFinished()==false }">
+						<c:if test="${empty repair.repairman }">
+							<a href="assign/${repair.id }">Przyjmij do naprawy</a>
+						</c:if>
+						<c:if test="${not empty repair.repairman }">
+							<a href="update/${repair.id }">Zaktualizuj naprawę</a>
+						</c:if>
+					</c:if></td>
+
+				<td>
+					<c:if test="${repair.isFinished()==false }">
+						<a href="finish/${repair.id }">Zakończ</a>
+					</c:if>
+					<c:if test="${repair.isFinished()}">
+					Naprawa zakończona
+					</c:if>
+				</td>
 			</tr>
-			</form:form>
 		</c:forEach>
 	</table>
 	</div>

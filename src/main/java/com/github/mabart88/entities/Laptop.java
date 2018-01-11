@@ -3,6 +3,7 @@ package com.github.mabart88.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
 
 
@@ -35,8 +37,6 @@ public class Laptop {
 	@Size(min=5, groups = { RepairGroup.class })
 	private String serialNumber;
 	
-	@NotNull
-	private boolean warranty;
 	
 	private LocalDate purchaseDate;
 	
@@ -79,14 +79,6 @@ public class Laptop {
 		this.serialNumber = serialNumber;
 	}
 
-	public boolean isWarranty() {
-		return warranty;
-	}
-
-	public void setWarranty(boolean warranty) {
-		this.warranty = warranty;
-	}
-
 	public LocalDate getPurchaseDate() {
 		return purchaseDate;
 	}
@@ -102,5 +94,12 @@ public class Laptop {
 	public void setUser(User user) {
 		this.owner = user;
 	}
+
+	@Override
+	public String toString() {
+		return brand + " " + model + ", numer seryjny: " + serialNumber;
+	}
+	
+	
 
 }

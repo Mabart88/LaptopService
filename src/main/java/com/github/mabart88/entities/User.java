@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class User {
@@ -32,6 +33,10 @@ public class User {
 
 	@Size(min = 5)
 	private String password;
+	
+	@NotNull
+	@Range(min=100000000, max=999999999)
+	private int phoneNumber;
 
 	@NotNull
 	private boolean isRepairman;
@@ -44,6 +49,16 @@ public class User {
 
 	@OneToMany(mappedBy = "owner")
 	private List<Laptop> laptops;
+
+	
+	
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 	public String getPassword() {
 		return password;
@@ -116,5 +131,12 @@ public class User {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+
+	
 
 }

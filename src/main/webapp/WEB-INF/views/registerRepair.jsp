@@ -47,7 +47,7 @@
 
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" href="/LaptopService/">Strona
+			<li class="nav-item active"><a class="nav-link" href="/LaptopService/">Strona
 					główna 
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/status">Sprawdź
@@ -55,16 +55,16 @@
 					<li class="nav-item"><a class="nav-link" href="/LaptopService/about">O nas</a></li>
 			<c:if test="${not empty logged}">
 				<li class="nav-item"><a class="nav-link" href="/LaptopService/account">Twoje
-						Konto</a></li>
+						Konto<span class="sr-only">(current)</span></a></li>
 			</c:if>
 			<c:if test="${logged.isAdmin() }">
-				<li class="nav-item active"><a class="nav-link" href="/LaptopService/admin/users">
-						Panel administratora <span class="sr-only">(current)</span>
+				<li class="nav-item"><a class="nav-link" href="/LaptopService/admin/users">
+						Panel administratora<br>
 				</a></li>
 			</c:if>
 			<c:if test="${logged.isRepairman() }">
 				<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/all">Panel
-						serwisanta
+						serwisanta<br>
 				</a></li>
 			</c:if>
 
@@ -96,28 +96,15 @@
 
 	<main role="main"> <!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
+	<form:form method="post" modelAttribute="repair">
+	Opis usterki: <form:textarea	path="description"	rows="4" cols="40"/>
+		<form:errors path="description" />
+		<br>
 	
-<div class="table-responsive">
-	<table class="table table-striped">
-		<tr>
-			<td>Imię i nazwisko</td>
-			<td>Email</td>
-			<td>Uprawnienia serwisanta</td>
-			<td>Usuwanie</td>
-		</tr>
-		<c:forEach items="${users }" var="user">
-		<form:form modelAttribute="${user }">
-			<tr>
-				<td>${user.firstName } ${user.lastName }</td>
-				<td>${user.email }</td>
-				<td><a href="repairman/${user.id }"><c:if test="${user.isRepairman() }">Serwisant</c:if><c:if test="${user.isRepairman()==false }">Nie serwisant</c:if></a></td>
-				
-				<td><a href="delete/${user.id }">Usuń</a></td>
-			</tr>
-			</form:form>
-		</c:forEach>
-	</table>
-	</div>
+		<input type="submit" value="Dodaj">
+	
+		<form:errors path="*" />
+	</form:form>
 	</div>
 	</main>
 </body>

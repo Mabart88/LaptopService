@@ -6,37 +6,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<title>Hammer Time</title>
+    <title>Hammer Time</title>
 
-<!-- Bootstrap core CSS -->
-<link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom styles for this template -->
-<link href="jumbotron.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-	integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-	crossorigin="anonymous">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
-	integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-	crossorigin="anonymous"></script>
-</head>
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+  </head>
 
-<body>
+  <body>
 
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<a class="navbar-brand" href="/LaptopService/">Hammer Time</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarsExampleDefault"
@@ -54,17 +44,17 @@
 					stan naprawy</a></li>
 					<li class="nav-item"><a class="nav-link" href="/LaptopService/about">O nas</a></li>
 			<c:if test="${not empty logged}">
-				<li class="nav-item"><a class="nav-link" href="/LaptopService/account">Twoje
-						Konto</a></li>
+				<li class="nav-item active"><a class="nav-link" href="/LaptopService/account">Twoje
+						Konto <span class="sr-only">(current)</span></a></li>
 			</c:if>
 			<c:if test="${logged.isAdmin() }">
-				<li class="nav-item active"><a class="nav-link" href="/LaptopService/admin/users">
-						Panel administratora <span class="sr-only">(current)</span>
+				<li class="nav-item"><a class="nav-link" href="/LaptopService/admin/users">
+						Panel administratora<br>
 				</a></li>
 			</c:if>
 			<c:if test="${logged.isRepairman() }">
 				<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/all">Panel
-						serwisanta
+						serwisanta<br>
 				</a></li>
 			</c:if>
 
@@ -94,27 +84,46 @@
 	</div>
 	</nav>
 
-	<main role="main"> <!-- Main jumbotron for a primary marketing message or call to action -->
-	<div class="jumbotron">
-	
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
 <div class="table-responsive">
+
+	<h2>Twoje naprawy</h2>
 	<table class="table table-striped">
 		<tr>
-			<td>Imię i nazwisko</td>
-			<td>Email</td>
-			<td>Uprawnienia serwisanta</td>
-			<td>Usuwanie</td>
+			<td>Laptop</td>
+			<td>Opis Usterki</td>
+			<td>Opis Naprawy</td>
 		</tr>
-		<c:forEach items="${users }" var="user">
-		<form:form modelAttribute="${user }">
+		<c:forEach items="${repairs }" var="repair">
 			<tr>
-				<td>${user.firstName } ${user.lastName }</td>
-				<td>${user.email }</td>
-				<td><a href="repairman/${user.id }"><c:if test="${user.isRepairman() }">Serwisant</c:if><c:if test="${user.isRepairman()==false }">Nie serwisant</c:if></a></td>
-				
-				<td><a href="delete/${user.id }">Usuń</a></td>
+				<td>${repair.laptop }</td>
+				<td>${repair.description }</td>
+				<td>${repair.repairDesc }</td>
 			</tr>
-			</form:form>
+		</c:forEach>
+	</table>
+	
+	</div>
+	<br>
+	<div class="table-responsive">
+	<h2>Twoje laptopy</h2>
+<table class="table table-striped">
+		<tr >
+			<td>Marka</td>
+			<td>Model</td>
+			<td>Numer seryjny</td>
+			<td>Zgłoś do naprawy</td>
+		</tr>
+		<c:forEach items="${laptops }" var="laptop">
+			<tr>
+				<td>${laptop.brand }</td>
+				<td>${laptop.model }</td>
+				<td>${laptop.serialNumber}</td>
+				<td><a href="repair/${laptop.id }">Zgłoś do naprawy</a></td>
+			</tr>
 		</c:forEach>
 	</table>
 	</div>
