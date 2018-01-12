@@ -62,5 +62,10 @@ public class AdminController {
 		return userRepository.findAll();
 
 	}
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable long id) {
+		userRepository.delete(id);
+		return "redirect:/admin/users";
+	}
 
 }

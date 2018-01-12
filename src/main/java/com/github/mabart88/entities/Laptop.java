@@ -3,8 +3,10 @@ package com.github.mabart88.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +46,7 @@ public class Laptop {
 	@JoinColumn
 	private User owner;
 	
-	@OneToMany(mappedBy="laptop")
+	@OneToMany(mappedBy="laptop", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Repair> repairs;
 
 	public long getId() {
@@ -98,6 +100,22 @@ public class Laptop {
 	@Override
 	public String toString() {
 		return brand + " " + model + ", numer seryjny: " + serialNumber;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public List<Repair> getRepairs() {
+		return repairs;
+	}
+
+	public void setRepairs(List<Repair> repairs) {
+		this.repairs = repairs;
 	}
 	
 	

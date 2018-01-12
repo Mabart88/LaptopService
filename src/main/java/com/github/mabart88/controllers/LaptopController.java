@@ -1,5 +1,8 @@
 package com.github.mabart88.controllers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -8,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.mabart88.entities.Laptop;
 import com.github.mabart88.entities.User;
@@ -38,6 +43,19 @@ public class LaptopController {
 		model.addAttribute("dateError", "Niepoprawna data, wpisz datę w formacie RRRR-MM-DD");
 		return "registerLaptop";
 
+	}
+	@RequestMapping("/removeLaptop/{id}")
+	public String removeLaptop(@PathVariable long id, HttpSession sess) {
+
+		Laptop laptop = laptopRepository.findOne(id);
+		User user = (User) sess.getAttribute("logged");
+		if(user!=null && laptop.getUser().getId()==user.getId()) {
+			laptopRepository.delete(laptop);
+			return "redirect:/account";
+		}
+		return "redirect:/";
+		
+		
 	}
 
 }

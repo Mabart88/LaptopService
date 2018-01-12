@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.mabart88.entities.Laptop;
 import com.github.mabart88.entities.Repair;
@@ -54,6 +56,7 @@ public class RepairController {
 	public String assign(@PathVariable long id, HttpSession sess) {
 		User user = (User) sess.getAttribute("logged");
 		Repair repair = repairRepository.findOne(id);
+		repair.setRepairDesc("Diagnozowanie usterki");
 		repair.setRepairman(user);
 		repairRepository.save(repair);
 		return "redirect:/repair/all";
@@ -127,6 +130,21 @@ public class RepairController {
 		repairRepository.save(repair);
 		return "redirect:/repair/all";
 	}
+	
+	@GetMapping("/status")
+	public String status() {
+		return "status";
+	}
+	@PostMapping("/status")
+	public String status(@RequestParam String id, Model model) {
+		long ident = Long.parseLong(id);
+		Repair repair = repairRepository.findOne(ident);
+//		System.out.println(repair);
+		model.addAttribute("repair", repair);
+		
+		return "status";
+	}
+	
 	
 	@RequestMapping("/done")
 	public String done() {

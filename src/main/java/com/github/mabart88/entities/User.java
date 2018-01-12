@@ -2,6 +2,7 @@ package com.github.mabart88.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,10 +45,10 @@ public class User {
 	@NotNull
 	private boolean isAdmin;
 
-	@OneToMany(mappedBy = "repairman")
+	@OneToMany(mappedBy = "repairman",cascade=CascadeType.DETACH)
 	private List<Repair> repairs;
 
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner",cascade=CascadeType.DETACH)
 	private List<Laptop> laptops;
 
 	

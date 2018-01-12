@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -121,10 +122,44 @@ public class Repair {
 	public void setWarranty(boolean warranty) {
 		this.warranty = warranty;
 	}
+	
+	public String getStatus() {
+		String status="";
+		if(this.repairman==null) {
+			status="Naprawa zgłoszona";
+		}else if(this.isFinished) {
+			status="Naprawa zakończona"+"<br>Opis naprawy: "+this.repairDesc;
+		}else {
+			status="W naprawie, "+"<br>Opis naprawy: "+this.repairDesc;
+		}
+		return status;
+	}
 
 	@Override
 	public String toString() {
-		return "Numer naprawy: " + id + ", description=" + description + "]";
+		return "Numer naprawy: " + id + ", opis usterki: " + description;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Repair other = (Repair) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 	

@@ -114,8 +114,6 @@
 		<br>
 		<input type="submit" value="Dodaj">
 		
-		${dateError }
-		<form:errors path="*" />
 	</form:form>
 	</div>
 	</main>

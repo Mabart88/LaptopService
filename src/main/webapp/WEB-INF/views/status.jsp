@@ -48,24 +48,22 @@
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="/LaptopService/">Strona
-					główna 
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/status">Sprawdź
-					stan naprawy</a></li>
-					<li class="nav-item"><a class="nav-link" href="/LaptopService/about">O nas</a></li>
+					główna </a></li>
+			<li class="nav-item active"><a class="nav-link"
+				href="/LaptopService/repair/status">Sprawdź stan naprawy <span class="sr-only">(current)</span></a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/LaptopService/about">O nas</a></li>
 			<c:if test="${not empty logged}">
-				<li class="nav-item active"><a class="nav-link" href="/LaptopService/account">Twoje
-						Konto<span class="sr-only">(current)</span></a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/LaptopService/account">Twoje Konto</a></li>
 			</c:if>
 			<c:if test="${logged.isAdmin() }">
-				<li class="nav-item"><a class="nav-link" href="/LaptopService/admin/users">
-						Panel administratora
-				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/LaptopService/admin/users"> Panel administratora </a></li>
 			</c:if>
 			<c:if test="${logged.isRepairman() }">
-				<li class="nav-item"><a class="nav-link" href="/LaptopService/repair/all">Panel
-						serwisanta
-				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/LaptopService/repair/all">Panel serwisanta </a></li>
 			</c:if>
 
 		</ul>
@@ -86,7 +84,8 @@
 					się</button>
 			</form>
 			&emsp;
-			<form class="form-inline my-2 my-lg-0" action="/LaptopService/register">
+			<form class="form-inline my-2 my-lg-0"
+				action="/LaptopService/register">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zarejestruj
 					się</button>
 			</form>
@@ -96,9 +95,20 @@
 
 	<main role="main"> <!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
-Prawidłowo zgłoszono laptopa do naprawy<br>
-Wyślij go do nas kurierem lub przynieś do naszego serwisu abyśmy mogli zacząć rozwiązywać Twój problem<br>
-<a href="../">Strona główna</a>
+
+
+
+
+
+<form method="post">
+Numer naprawy: <input type="text" name="id">
+<input type="submit" value="Sprawdź">
+
+<br>
+${repair.laptop } ${repair.getStatus()}
+</form>
+
 </div>
+</main>
 </body>
 </html>

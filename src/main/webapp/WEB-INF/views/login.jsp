@@ -84,8 +84,9 @@
 	<form method="post">
 		Email: <input type="text" name="email" /><br> 	
 		Password: <input type="password" name="password" /><br> 
-		${info}<br> 
-		<input type="submit" value="Zaloguj">
+		<span style="color: red">${info}</span><br> 
+		<input type="submit" value="Zaloguj"><br><br>
+		<a href="/LaptopService/register">Nie masz konta? Zarejestruj się</a>
 		
 	</form>
 	</div>
